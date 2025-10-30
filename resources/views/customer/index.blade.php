@@ -11,21 +11,22 @@
                     <a href="{{ route('customer.storeView') }}" class="btn" style="background-color: #4643d3; color: white;"><i class="fas fa-plus"></i> Create Customer</a>
                 </div>
                 <div class="col-md-8">
-                    <form action="">
+                    <form action=" {{ route('customer.index') }} " method="GET">
                         <div class="input-group mb-3">
-                            <input type="text" class="form-control" placeholder="Search anything..." aria-describedby="button-addon2">
+                            <input type="text" class="form-control" placeholder="Search anything..." aria-describedby="button-addon2" name="search">
                             <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Search</button>
                         </div>
                     </form>
                 </div>
                 <div class="col-md-2">
-
-                    <div class="input-group mb-3">
-                        <select class="form-select" name="" id="">
-                            <option value="">Newest to Old</option>
-                            <option value="">Old to Newest</option>
-                        </select>
-                    </div>
+                    <form action=" {{ route('customer.index') }} " method="GET" class="form-order">
+                        <div class="input-group mb-3">
+                            <select class="form-select" name="order" id="order" onchange="$('form.form-order').submit();">
+                                <option value="desc" {{ request()->order == 'desc' ? 'selected' : '' }}>Newest to Old</option>
+                                <option value="asc" {{ request()->order == 'asc' ? 'selected' : '' }}>Old to Newest</option>
+                            </select>
+                        </div>
+                    </form>
                 </div>
                 </div>
                   

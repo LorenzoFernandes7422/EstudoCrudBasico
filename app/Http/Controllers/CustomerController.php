@@ -9,9 +9,17 @@ use Illuminate\Support\Facades\Storage;
 
 class CustomerController extends Controller
 {
-    public function index()
-    {
-        $customers = Customer::all();
+    public function index(Request $request)
+    {   
+            
+        $customers = Customer::when($request->search, function($query) use ($request){
+            return $query->where('first_name', 'like', '%'.$request->search.'%')
+            ->orWhere('last_name', 'like', '%'.$request->search.'%')
+            ->orWhere('email', 'like', '%'.$request->search.'%')
+            ->orWhere('phone', 'like', '%'.$request->search.'%')
+            ->orWhere('bank_account_number', 'like', '%'.$request->search.'%');
+        })->orderBy('created_at', $request->order ?? 'desc')->get();
+
         return view('customer.index', compact('customers'));
     }
 
